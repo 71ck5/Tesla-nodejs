@@ -20,7 +20,7 @@ const $ = cheerio.load(fs.readFileSync(__dirname + '/public/template.html'));
 function updatedHtml(res){
     res.send($.html())
 }
-app.get
+
 var called = false
 function tesla_list(token, res){
     tesla.listcars(token).then(result2 => {
@@ -89,4 +89,6 @@ app.get("/test", (req,res) => {
     res.send('<p>test</p>')
 })
 
-app.listen(process.env.PORT||3000,console.log('3000'))
+app.listen (80, () => {
+    console.log('listening on port 80')
+})
