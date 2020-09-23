@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser');
 const app = express()
-const tesla = require ('./tesla.js');
+const tesla = require ('/tesla.js');
 var cookieParser = require('cookie-parser');
 const cheerio = require('cheerio');
 var fs = require('fs');
@@ -51,7 +51,12 @@ function tesla_list(token, res){
     }
                updatedHtml(res)
        }
-    )}
+    )    
+    .catch(error =>{
+        res.send(error)
+    })
+    
+}
 
 app.post("/login", async (req, res) =>{
     var email = req.body.Email
@@ -79,6 +84,9 @@ app.get("/cars", async (req, res) =>{
 )
 app.get("/", (req,res) => {
     res.redirect('/public/')
+})
+app.get("/test", (req,res) => {
+    res.send('test')
 })
 
 app.listen(process.env.PORT||3000,console.log('3000'))
