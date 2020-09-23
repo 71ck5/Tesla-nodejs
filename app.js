@@ -86,7 +86,7 @@ app.get("/", (req,res) => {
     res.redirect('/public/')
 })
 app.get("/test", (req,res) => {
-    res.send('test')
+    res.send('<p>test</p>')
 })
 
 app.listen(process.env.PORT||3000,console.log('3000'))
