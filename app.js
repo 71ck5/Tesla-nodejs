@@ -82,9 +82,7 @@ app.get("/cars", async (req, res) =>{
     tesla_list(token, res)
 }
 )
-app.get("/", (req,res) => {
-    res.redirect('/public/')
-})
+
 app.get("/test", (req,res) => {
     res.send('<p>test</p>')
 })
