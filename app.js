@@ -16,9 +16,11 @@ app.use(express.static(__dirname + '/public'));
 // Allowing access to static pages
 
 app.get("/", (req,res) => {
-    res.asd
+    res.send("<h1>hi</h1>")
 })
+
 const port = process.env.PORT || 8080;
+
 const $ = cheerio.load(fs.readFileSync(__dirname + '/public/template.html'));
 
 function updatedHtml(res){
