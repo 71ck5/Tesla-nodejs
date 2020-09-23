@@ -1,0 +1,79 @@
+<html>
+<head>
+<style>
+a {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+  width: 40%;
+}
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 50%;
+  border: none;
+  text-align: center;
+  outline: none;
+  font-size: 15px;
+  display: flex;
+  vertical-align: middle;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+.content {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    align-items: center;
+    display: flexbox;
+  }
+.li{
+  background-color: #777;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30%;
+}
+p {
+    font-size: xx-large;
+}
+</style>    
+</head>
+<script type="text/javascript" src="src/purify.js"></script>
+<body>
+<div class="lu">
+</div>
+<script>
+    var coll = document.getElementsByClassName("li");
+    var i;
+    
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight){
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      });
+    }
+    </script>
+</body>
+</html>
