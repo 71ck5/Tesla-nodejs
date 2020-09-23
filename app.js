@@ -77,7 +77,10 @@ app.get("/cars", async (req, res) =>{
     tesla_list(token, res)
 }
 )
+app.get("/", (req,res) => {
+    res.redirect('/static/')
+})
 
-app.listen (3003, () => {
-    console.log('listening on port 3003')
+app.listen (80, () => {
+    console.log('listening on port 80')
 })
