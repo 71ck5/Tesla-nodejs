@@ -15,9 +15,6 @@ app.use(express.static(__dirname + '/public'));
 
 // Allowing access to static pages
 
-app.get("/", (req,res) => {
-    res.send("<h1>hi</h1>")
-})
 
 const port = process.env.PORT || 8080;
 
@@ -37,19 +34,12 @@ function tesla_list(token, res){
            <img src="https://static-assets.tesla.com/v1/compositor/?model=mx&view=STUD_3QTR_V2&size=700&options=MTX03,COL2-PMNG,WT20&bkba_opt=1&context=design_studio_2.png">
             </div>
             <div class="content">
-           <a href="#Wakeup" value="Wakeup">Wakeup</a>
-           <a href="#" value="Unlock Doors">Unlock Doors</a>
-           <a href="#" value="Lock Doors">Lock Doors</a>
-           <a href="#" value="Honk Horn">Honk Horn</a>
-           <a href="#" value="Flash Lights">Flash Lights</a>
-           <a href="#" value="Start HVAC System">Start HVAC System</a>
-           <a href="#" value="Stop HVAC System">Stop HVAC System</a>
-           <a href="#" value="Set Temperature">Set Temperature</a>
-           <a href="#" value="Set Charge Limit">Set Charge Limit</a>
-           <a href="#" value="Set Max Range Charge Limit">Set Max Range Charge Limit</a>
-           <a href="#" value="Set Standard Charge Limit">Set Standard Charge Limit</a>
-           <a href="#" value="Open sun roof">Open sun roof</a>
-           <a href="#" value="Actuate trunk">Actuate trunk</a>
+           <a href="/command?wake_up=${result2.response[index].id}" value="Wakeup">Wakeup</a>
+           <a href="/command?door_unlock=${result2.response[index].id}" value="Unlock Doors">Unlock Doors</a>
+           <a href="/command?door_lock=${result2.response[index].id}" value="Lock Doors">Lock Doors</a>
+           <a href="/command?honk_horn=${result2.response[index].id}" value="Honk Horn">Honk Horn</a>
+           <a href="/command?flash_lights=${result2.response[index].id}" value="Flash Lights">Flash Lights</a>
+           <a href="/data?vehicle_data=${result2.response[index].id}" value="Data">Get Vehicle Data</a>
             </div>`);
        }
        return called = true
@@ -72,21 +62,53 @@ app.post("/login", async (req, res) =>{
     else{
     console.log(req)
     tesla.RenewPassword(email, pass).then(result => {
-        res.redirect('/cars')
-        res.cookie('access_token', `${result.access_token}`) 
+        try{
+            res.cookie('access_token', `${result.access_token}`) 
+        }
+        finally{
+            res.redirect('/cars')
+        }
     })
     .catch(error =>{
         res.send('User name or password incorrect! Try Again!')
-    }
-    )
+    })
 }
+})
+
+app.get("/login", async (req, res) =>{
+
 })
 
 app.get("/cars", async (req, res) =>{
     var token = req.cookies.access_token
     tesla_list(token, res)
-}
+    }
 )
+
+app.get("/data", async (req, res) =>{
+    if(req.query){
+        var token = req.cookies.access_token
+        var data = Object.keys(req.query)[0]
+        var id = Object.values(req.query)[0]
+        tesla.tesla_state(token, id, data).then(result => {
+        res.json(result)
+        })
+    }else{
+        res.send("no data")
+    }
+})
+
+app.get("/command", (req, res) =>{
+    if(req.query){
+        var token = req.cookies.access_token
+        var command =  Object.keys(req.query)[0]
+        var id = Object.values(req.query)[0]
+        tesla.tesla_command(token, id, command).then(result => {
+        res.send(result)
+        console.log(result)
+        })
+    }
+})
 
 app.get("/test", (req,res) => {
     res.send('<p>test</p>')

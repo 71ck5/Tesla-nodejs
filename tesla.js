@@ -51,4 +51,33 @@ async function listcars (token) {
                 console.error(error)
               })
 }
-module.exports = { RenewPassword, RenewRefresh, listcars }
+
+async function tesla_command (token, id, command) {
+  return axios
+      .post('https://owner-api.teslamotors.com/api/1/vehicles/' + id + '/command/' + command, null,{
+                headers: {'Authorization': `Bearer ${token}`}
+})
+          .then((res) => {
+                  console.log(`statusCode: ${res.statusCode}`);
+                  return res.data
+              })
+            .catch((error) => {
+              console.error(error)
+            })
+}
+
+async function tesla_state (token, id, data) {
+  return axios
+      .get('https://owner-api.teslamotors.com/api/1/vehicles/' + id +'/'+ data, {
+              headers: {'Authorization': `Bearer ${token}`}
+  }
+  )
+          .then((res) => {
+                  console.log(`statusCode: ${res.statusCode}`);
+                  return res.data
+              })
+            .catch((error) => {
+              console.error(error)
+            })
+}
+module.exports = { RenewPassword, RenewRefresh, listcars, tesla_command, tesla_state }
