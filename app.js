@@ -1,6 +1,6 @@
-const express = require('express')
+const express = require('express');
 const bodyParser = require('body-parser');
-const app = express()
+const app = express();
 const tesla = require ('/tesla.js');
 var cookieParser = require('cookie-parser');
 const cheerio = require('cheerio');
@@ -11,16 +11,19 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Allowing access to static pages
-app.use('/public', express.static('public'))
-app.use('/public', express.static('images'))
+app.use(express.staticProvider(__dirname + '/public'));
 
+// Allowing access to static pages
+
+app.get("/", (req,res) => {
+    res.asd
+})
+const port = process.env.PORT || 8080;
 const $ = cheerio.load(fs.readFileSync(__dirname + '/public/template.html'));
 
 function updatedHtml(res){
     res.send($.html())
 }
-app.get
 var called = false
 function tesla_list(token, res){
     tesla.listcars(token).then(result2 => {
@@ -87,4 +90,6 @@ app.get("/test", (req,res) => {
     res.send('<p>test</p>')
 })
 
-app.listen(process.env.PORT||3000,console.log('3000'))
+app.listen(port, () => {
+    console.log(`Running on port ${port}`);
+    });
