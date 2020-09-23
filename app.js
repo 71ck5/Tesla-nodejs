@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const tesla = require ('/tesla.js');
+const tesla = require ('./tesla.js');
 var cookieParser = require('cookie-parser');
 const cheerio = require('cheerio');
 var fs = require('fs');
@@ -11,7 +11,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(express.staticProvider(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
 
 // Allowing access to static pages
 
