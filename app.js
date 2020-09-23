@@ -13,8 +13,6 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/public'));
 
-// Allowing access to static pages
-
 
 const port = process.env.PORT || 8080;
 
@@ -23,6 +21,7 @@ const $ = cheerio.load(fs.readFileSync(__dirname + '/public/template.html'));
 function updatedHtml(res){
     res.send($.html())
 }
+
 var called = false
 function tesla_list(token, res){
     tesla.listcars(token).then(result2 => {
@@ -108,10 +107,6 @@ app.get("/command", (req, res) =>{
         console.log(result)
         })
     }
-})
-
-app.get("/test", (req,res) => {
-    res.send('<p>test</p>')
 })
 
 app.listen(port, () => {
