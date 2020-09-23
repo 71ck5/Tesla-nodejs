@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/29801423-6e57-455b-85e5-9394dca51481/resourceGroups/Testing-Sites-PRD/providers/Microsoft.Web/sites/tesla-api",
+    "appService.deploySubpath": "."
+}

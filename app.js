@@ -12,10 +12,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Allowing access to static pages
-app.use('/static', express.static('html'))
-app.use('/static', express.static('images'))
+app.use('/public', express.static('public'))
+app.use('/public', express.static('images'))
 
-const $ = cheerio.load(fs.readFileSync(__dirname + '/html/template.html'));
+const $ = cheerio.load(fs.readFileSync(__dirname + '/public/template.html'));
 
 function updatedHtml(res){
     res.send($.html())
@@ -78,7 +78,7 @@ app.get("/cars", async (req, res) =>{
 }
 )
 app.get("/", (req,res) => {
-    res.redirect('/static/')
+    res.redirect('/public/')
 })
 
 app.listen (80, () => {
